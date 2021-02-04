@@ -130,3 +130,34 @@ validateToken();
   <button>send</button>
 </form>
 ```
+
+## DB
+
+**用語**
+
+- table : 一つ一つの表のこと
+- record : 行
+- colomn : 列
+- SQL(structured query language)
+- SQL ではコードはクエリ（問い合わせをする）と呼ばれる
+- SQL があらかじめ用意している命令は大文字、自分でつけるテーブル名やカラム名などは小文字にすることが多い。
+
+**テーブル作成**
+
+- CREATE TABLE posts (); //posts はテーブル名
+- 引数にはカラム名を入れるが底に入れる型も入れる
+
+```
+CRAETE TABLE posts (
+  message VARCHAR(140), likes INT
+);
+```
+
+**レコードの作成**
+
+```
+INSERT INTO
+ posts (message, likes)
+ VALUES
+  ('hello', 22);
+```
