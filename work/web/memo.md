@@ -142,15 +142,19 @@ validateToken();
 - SQL ではコードはクエリ（問い合わせをする）と呼ばれる
 - SQL があらかじめ用意している命令は大文字、自分でつけるテーブル名やカラム名などは小文字にすることが多い。
 
-**テーブル作成**
+**テーブル作成　カラム名作成**
 
 - CREATE TABLE posts (); //posts はテーブル名
-- 引数にはカラム名を入れるが底に入れる型も入れる
+- 引数にはカラム名を入れる同時に入れる型も入れる
 
 ```
 CRAETE TABLE posts (
   message VARCHAR(140), likes INT
 );
+
+//character varying : 可変長の文字列
+
+SHOW TABLES;
 ```
 
 **レコードの作成**
@@ -161,3 +165,51 @@ INSERT INTO
  VALUES
   ('hello', 22);
 ```
+
+**テーブルの削除**
+
+```
+DROP TABLE IF EXISTS posts;
+```
+
+**データ型**
+
+1. 整数
+
+- ITNYINT : -128 ~ 127
+- INT : -21 億 ~ 21 億
+- BIGINT : -922 京 ~ 922 京
+- TINYINT UNSIGNED : 0 ~ 255
+- INT UNSIGNED : 0 ~ 42 億
+- BIGINT UNSIGNED : 0 ~ 1844 京
+
+2. 実数
+   - DECIMAL : 固定小数点 (全体, 小数点以下)を引数してい
+   - FLOAT : 浮動小数点
+   - DOUBLE : 浮動小数点（高精度）
+3. 文字列　（）引数で文字数を指定
+   - CHAR : ~ 255 字
+   - VARCHAR : ~ 65535 文字
+   - TEXT : それ以上
+   - ENUM : 特定の文字列から１つ
+   - SET : 特定の文字列から複数
+4. 真偽値
+   - BOOL : TRUE / FALSE > TINYINT(1) : 1 / 0
+5. 日時
+   - DATE : 日付
+   - TIME : 時間
+   - DATETIME : 日時
+
+**ENUM, SET**
+
+- ENUM
+  - 例：posts(category ENUM('Gadget', 'Game', 'Business'));でカラム作成、インサート時：posts(category) VALUES ('Gadget')で１つ選ぶ。
+  - またインデックス番号で指定しても可能
+- SET
+  - 複数の値を選べる。
+  - 文字列で囲った中に複数入れる。空白入れはいけない
+  - 数値で表現可能値を数値で管理しているため。左から 2^0 //1, 2^1 //2, 2^2 //4。なので'Gadget' を選ぶには 1、'Gadget,Game'のさいは 1+2 で 3 を指定。
+  ```
+    INSERT INTO posts (category) VALUES ('Gadhet,Game,Bushiness');
+    SELECT * FROM posts; //Gadget,Game,Bushiness
+  ```
