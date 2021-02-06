@@ -218,3 +218,29 @@ DROP TABLE IF EXISTS posts;
 
 - 真偽値は TRUE は１で FALSE は０で管理
 - 日時は時間を省略すると０時０分０秒になる、また現在の日時を表す NOW()関数が使え、従来の表現はハイフンやコロンで表現
+
+**NULL の扱い**
+
+- 何も値がないよという*NULL という値*が入る
+  - テーブルに message, likes ２つのカラムがある場合 INSERT する際 message しか渡さないと NULL が入る
+  - NOT NULL という NULL を受け付けないという制約もつけることができる。
+
+```
+  INSERT INTO posts (message) VALUES ('haro') //likes > NULLが入る自動的に
+
+  CREATE TABLE posts (
+    message VARCHAR(140),
+     likes NOT NULL
+    )
+```
+
+**デフォルト値の設定**
+
+- 値がなにもない時 NULL の場合などなくて困る時は値を事前にセットできる
+
+```
+  CREATE TABLE posts (
+    message VARCHAR(140),
+    likes INT DEFAULT 0 //何もインサートしなくてもデフォルト値が入る
+  )
+```
