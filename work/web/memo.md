@@ -213,3 +213,8 @@ DROP TABLE IF EXISTS posts;
     INSERT INTO posts (category) VALUES ('Gadhet,Game,Bushiness');
     SELECT * FROM posts; //Gadget,Game,Bushiness
   ```
+
+**真偽値や日時**
+
+- 真偽値は TRUE は１で FALSE は０で管理
+- 日時は時間を省略すると０時０分０秒になる、また現在の日時を表す NOW()関数が使え、従来の表現はハイフンやコロンで表現
