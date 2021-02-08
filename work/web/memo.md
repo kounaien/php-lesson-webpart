@@ -244,3 +244,12 @@ DROP TABLE IF EXISTS posts;
     likes INT DEFAULT 0 //何もインサートしなくてもデフォルト値が入る
   )
 ```
+
+**\*値の制限**
+
+- 値の制限と重複を防いでいる
+
+```
+  likes INT CHECK(likes >= 0 AND likes <= 100),
+  message VARCHAR(140) UNIQUE
+```
