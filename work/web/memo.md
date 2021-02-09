@@ -253,3 +253,68 @@ DROP TABLE IF EXISTS posts;
   likes INT CHECK(likes >= 0 AND likes <= 100),
   message VARCHAR(140) UNIQUE
 ```
+
+**主キー\***
+
+- テーブルでは、特定のレコードを処理するために、そのレコードを一意に識別するためのカラムを設定するのが一般的。
+- 大抵の場合 id という名前で NULL ではない整数の連番にするので INT NOT NULL とする
+- PRIMARY KEY でこのテーブルの主キーにするという設定、主キーにしておくとうっかり入れ忘れたとかがない
+- AUTO INCREMENT を使えば自動的に数値を足していってくれる。ただし INSERT の時はカラム名指定外す
+
+```
+  (id INT NOT NULL AUTO_INCREMENT
+  PRIMARY KEY (id));
+
+  INSERT INTO posts (id, message, likes) VALUES ();
+
+```
+
+**SELECT でデータ指定**
+
+- カンマ区切りでカラムを指定してレコードを取り出せる
+- また条件を WHERE でレコードに条件をつけれる
+
+```
+SELECT message, likes FROM posts;
+SELECT * FROM posts WHERE id <= 9;
+```
+
+**条件を組み合わせ**
+
+- AND と OR
+- BETWEEN と IN、それぞれ前に NOT をつけるとその反意になる
+
+```
+SELECT * FROM posts WHERE likes <= 12 AND likes >= 4;
+SELECT * FROM posts WHERE likes BETWEEN 4 AND 12;　上記と同じ
+
+SELECT * FROM posts WHERE likes = 4 OR likes = 12;
+SELECT * FROM posts WEHRE likes IN (4, 12);
+```
+
+**\*LIKE と％を使って文字列を抽出**
+
+- LIKE キーワードを使えば特殊な記号も使うことができる。％で０文字以上の任意の文字、＿で任意の１文字を表現することができる
+  _%_
+- ％を使えば前方一位の検索をすることができる。例、t から始まる文字列
+- 後方一致や部分一致も％で実現、例、su で終わる文字列、例、t が含まれる文字列
+- 大文字小文字を区別したい時は BINARY キーワードをつける
+
+```
+  SELECT * FROM posts WHERE message BYNARY LIKE 't%';
+  SELECT * FROM posts WHERE message BYNARY LIKE '%su';
+  SELECT * FROM posts WHERE message BYNARY LIKE '%t%';
+```
+
+_\__
+
+- \_は任意の一文字を表す。例、任意の一文字が２つ続いて、その次が a でその後が 0 文字以上の任意の文字として
+- ３文字目が a 以外
+- 部分一致が％や＿はエスケープさせる
+
+```
+  SELECT * FROM posts WHERE message LIKE '__a';
+  SELECT * FROM posts WHERE message NOT LIKE '__a';
+  SELECT * FROM posts WHERE message LIKE '%\%%';
+  SELECT * FROM posts WHERE message LIKE '%\_%';
+```
