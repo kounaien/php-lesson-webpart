@@ -306,7 +306,7 @@ SELECT * FROM posts WEHRE likes IN (4, 12);
   SELECT * FROM posts WHERE message BYNARY LIKE '%t%';
 ```
 
-_\__
+\_\_\_
 
 - \_は任意の一文字を表す。例、任意の一文字が２つ続いて、その次が a でその後が 0 文字以上の任意の文字として
 - ３文字目が a 以外
@@ -317,4 +317,50 @@ _\__
   SELECT * FROM posts WHERE message NOT LIKE '__a';
   SELECT * FROM posts WHERE message LIKE '%\%%';
   SELECT * FROM posts WHERE message LIKE '%\_%';
+```
+
+**NULL のレコードを抽出**
+
+- 全部を抽出する場合 NULL は出てくるけど条件を絞っても NULL を出したい場合
+- 否定すれば NULL 以外全部出せる
+
+```
+  SELECT * FROM posts WHERE likes = 12 OR likes IS NULL;
+  SELECT * FROM posts WHERE likes IS NOT NULL:
+```
+
+**\*抽出結果を並び替える**
+
+- ORDER BY で並び替える、DESC で降順、デフォルトは昇順
+- 例、posts の値が同値で message の名前順にも並び替えたい時はカンマ区切り
+- 例、抽出する個数は LIMIT で、先頭の任意の個数飛ばすときは OFFSET、まとめて LIMIT で操作できる
+
+```
+  SELECT * FROM posts ORDER BY likes DESC, message LIMIT 3 OFFSET 2;
+  SELECT * FROM posts ORDER BY likes DESC, message LIMIT 2, 3; // 上記と同義
+```
+
+**数値の関数**
+
+- 計算んさせることもできる、AS でわかりやすくカラム名つけれる
+- FLOOR() : 小数点以下切り捨て
+- CEIL() : 小数点以下切り上げ、５以下でも切り上げ
+- ROUND() : 四捨五入、第二引数に切り捨てる位置指定可能
+
+```
+SELECT likes * 500 / 3 AS bonus,
+  FLOOR(likes * 500 / 3) AS floor,
+  CEIL(likes * 500 / 3) AS ceil,
+  ROUND(likes * 500 / 3, 2) AS round
+FROM posts;
+
+//output
+ bonus     | floor | ceil | round   |
++-----------+-------+------+---------+
+| 2000.0000 |  2000 | 2000 | 2000.00 |
+|  666.6667 |   666 |  667 |  666.67 |
+|  666.6667 |   666 |  667 |  666.67 |
+| 2500.0000 |  2500 | 2500 | 2500.00 |
+| 1333.3333 |  1333 | 1334 | 1333.33 |
++-----------+-------+------+---------+
 ```
