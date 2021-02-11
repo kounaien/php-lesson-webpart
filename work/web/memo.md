@@ -364,3 +364,16 @@ FROM posts;
 | 1333.3333 |  1333 | 1334 | 1333.33 |
 +-----------+-------+------+---------+
 ```
+
+**文字の関数**
+
+- SUBSTRING : 引数に数字を指定その数字以降から切り出すもしくわ末尾からはマイナスで指定
+- CONCAT : 連結させる
+- LENGTH,　 CHAR_LENGTH：長さ測る
+
+```
+SELECT message SUBSTRING(message, 3, 2) FROM posts; //３文字目から２個抽出
+SELECT message SUBSTRING(message, -2) FROM posts; //末尾から２個目から抽出
+SELECT CONCAT(message, '-', likes) FROM posts;
+SELECT messgae LENGTH(message) FROM posts;
+```
