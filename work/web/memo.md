@@ -377,3 +377,46 @@ SELECT message SUBSTRING(message, -2) FROM posts; //末尾から２個目から�
 SELECT CONCAT(message, '-', likes) FROM posts;
 SELECT messgae LENGTH(message) FROM posts;
 ```
+
+**日時の関数**
+
+- 日時のカラムを用意しておく DATETIME で型付け
+- 関数は
+  1. DAY();
+  2. MONTH();
+  3. YEAR();
+  4. DATE_FORMAT();
+  5. DATE_ADD();
+  6. DATEDIFF();
+
+```
+SELECT created, DATE_FORMAT(created, '%M %D %Y, %W') FROM posts;
+SELECT created, DATE_ADD(created, 7 DAY) AS next FROM posts;
+SELECT created, DATEDIFF(created, NOW()) AS diff FROM posts;
+```
+
+**\*データの更新**
+
+- カンマ区切りで複数指定可能
+- 条件つけることができる
+
+```
+UPDATE
+  posts
+SET
+ likes = likes + 5,
+ message = UPPER(message)
+ WHERE likes >= 10;
+```
+
+**データの削除**
+
+- 削除するときは基本条件付き
+- 削除して次のレコード挿入するときは連番が途中からになる
+- テーブル削除しても DELETE だと連番途中からに成る
+- TRUNCATE だと連番最初からでいける
+
+```
+DELETE FROM posts WHERE likes <= 10;
+TUNCATE TABLE posts;
+```
