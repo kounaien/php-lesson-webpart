@@ -420,3 +420,48 @@ SET
 DELETE FROM posts WHERE likes <= 10;
 TUNCATE TABLE posts;
 ```
+
+**日時の自動更新**
+
+- ON 　 UPDATE：レコードが更新された時点での日時を自動で更新することもできる。
+- 以下の例ではデフォルト時点の日時と SLEEP で時間が経ったときのレコードの時間は違う
+
+```
+CREATE TABLE posts (
+  id INT NOT NULL AUTO_INCREMENT,
+  message VARCHAR(140),
+  likes INT,
+  created DEFAULT NOW(),
+  updated DEFAULT NOW() ON UPDATE NOW(),
+  PRIMARY KEY(id)
+);
+
+INSERT,,,,
+
+SELECT SLEEP(3);
+UPDATE posts SET likes = 100 WHERE id = 1;
+SELECT id, likes, created, updated FROM posts;
+```
+
+**テーブルの設計を変更**
+
+- カラムの追加
+
+  - ALTER TABLE posts ADD author VARCHAR(255) AFTER id;
+  - ALTER TABLE posts ADD author VARCHAR(255) FIRST;
+
+- カラムの削除
+
+  - ALTER TABLE posts DROP message;
+
+- カラムの変更
+- MySQL は既存のデータを変換して保持しようとするが、データが消えてしまうこともあるので注意
+
+  - ALTER TABLE posts CHANGE likes points INT;
+  - DESC posts
+
+- テーブルの名前を後から変えてしまう方法
+- すでに messages テーブルがあった時にエラーになってしまうから
+  - DROP TABLE IF EXISTS messages;
+  - ALTER TABLE RENAME mssages;
+  - SHOW TABLES;
