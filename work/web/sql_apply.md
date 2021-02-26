@@ -98,3 +98,15 @@ CREATE TABLE posts_skelton LIKE posts;
 SHOW TABLES;
 SELECT * FROM posts_tokyo;
 ```
+
+## VIEW を扱ってみよう
+
+- VIEW という仕組みを使えば元テーブルと連動する仮想的なテーブル
+- VIEW 抽出条件だけを保持した仮想的なテーブルで実行するたびに、元データから再度値を抽出してくれるという仕組み
+
+```
+DROP VIEW IF EXISTS posts_tokyo_view;
+CREATE VIEW posts_tokyo_view AS SELECT * FROM posts WHERE area = 'Tokyo';
+
+UPDATE posts SET likes = 15 WHERE id = 1;
+```
