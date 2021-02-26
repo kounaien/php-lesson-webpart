@@ -55,3 +55,46 @@ WHERE
 GROUP BY
  area;
 ```
+
+## IF(),CASE を扱う
+
+- IF
+
+```
+SELECT
+  *,
+  IF(likes > 10, 'a', 'b') AS team
+  FROM posts;
+```
+
+- CASE
+
+```
+  SELECT
+   *,
+   CASE
+    WHEN likes > 10 THEN 'a'
+    WHEN likes > 5 THEN 'b'
+    ELSE 'c'
+  END AS team
+  FROM posts;
+```
+
+## 抽出結果を別テーブルに
+
+- AS はイコールのイメージ
+- posts テーブルが存在する際抽出結果を別テーブルとして切り出す
+
+```
+DROP TABLE IF EXISTS posts_tokyo;
+CREATE TABLE posts_tokyo AS SELECT * FROM posts WHERE area = 'TOKYO';
+
+DROP TABLE IF EXISTS posts_copy;
+CREATE TABLE posts_copy AS SELECT * FROM posts;
+
+DROP TABLE IF EXISTS posts_skelton;
+CREATE TABLE posts_skelton LIKE posts;
+
+SHOW TABLES;
+SELECT * FROM posts_tokyo;
+```
